@@ -1,26 +1,21 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UpdateUserCommand } from '../update-user.command';
 import { IUserRepository } from '../../../domain/repositories/user.repository';
-import { UserEntity } from '../../../domain/entities/user.entity';
+import { UserPartialUpdateBuilder } from '../../../domain/builders/user-partial-update.builder';
 
 @CommandHandler(UpdateUserCommand)
 export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
-    constructor(private readonly userRepository: IUserRepository) { }
+    constructor(private readonly userRepository: IUserRepository) {}
 
     async execute(command: UpdateUserCommand): Promise<void> {
-        const { id, updateData } = command;
+        const {id, name, email, password } = command;
 
-        const user = await this.userRepository.findUserById(id);
+        const builtUser = new UserPartialUpdateBuilder(id)
+            .setName(name)
+            .setEmail(email)
+            .setPassword(password)
+            .build()
 
-        if (!user) {
-            throw new Error('User not found');
-        }
-
-        const updatedUser: UserEntity = {
-            ...user,
-            ...updateData,
-        };
-
-        await this.userRepository.saveUser(updatedUser);
+        await this.userRepository.updateUser(builtUser);
     }
 }

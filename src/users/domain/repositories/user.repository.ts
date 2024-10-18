@@ -1,8 +1,9 @@
-import { UserEntity } from '../entities/user.entity';
+import { User } from '../models/user.model';
+import { UserPartialUpdate } from '../models/user-partial-update.model';
 
 export abstract class IUserRepository {
-    abstract findUserById(id: string): Promise<UserEntity | undefined>;
-    abstract saveUser(user: UserEntity): Promise<UserEntity>;
-    abstract updateUser(id: string, user: Partial<UserEntity>): Promise<UserEntity>;
+    abstract findUserById(id: string): Promise<User | undefined>;
+    abstract saveUser(user: User): Promise<User>;
+    abstract updateUser(optionalUser: UserPartialUpdate): Promise<void>;
     abstract deleteUser(id: string): Promise<void>;
 }

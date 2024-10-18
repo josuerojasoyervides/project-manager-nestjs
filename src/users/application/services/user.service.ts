@@ -6,7 +6,7 @@ import { UpdateUserCommand } from '../commands/update-user.command';
 import { DeleteUserCommand } from '../commands/delete-user.command';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UpdateUserDto } from '../dtos/update-user.dto';
-import { UserEntity } from '../../domain/entities/user.entity';
+import { User } from '../../domain/models/user.model';
 
 @Injectable()
 export class UserService {
@@ -21,18 +21,21 @@ export class UserService {
         return this.commandBus.execute(command);
     }
 
-    async findUserById(id: string): Promise<UserEntity | undefined> {
+    async findUserById(id: string): Promise<User | undefined> {
         const query = new GetUserQuery(id);
         return this.queryBus.execute(query);
     }
 
-    async findAllUsers(): Promise<UserEntity[]> {
+    async findAllUsers(): Promise<User[]> {
         const query = new GetUserQuery(null);
         return this.queryBus.execute(query);
     }
 
-    async updateUser(id: string, updateData: UpdateUserDto): Promise<void> {
-        const command = new UpdateUserCommand(id, updateData);
+    async updateUser(id, updateData: UpdateUserDto): Promise<void> {
+
+        const { name, email, password } = updateData
+
+        const command = new UpdateUserCommand(id, name, email, password);
         return this.commandBus.execute(command);
     }
 

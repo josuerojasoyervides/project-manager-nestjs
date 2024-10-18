@@ -4,7 +4,7 @@ import { IUserRepository } from '../../../domain/repositories/user.repository';
 
 @CommandHandler(DeleteUserCommand)
 export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
-    constructor(private readonly userRepository: IUserRepository) { }
+    constructor(private readonly userRepository: IUserRepository) {}
 
     async execute(command: DeleteUserCommand): Promise<void> {
         const { id } = command;

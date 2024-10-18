@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { UserService } from '../services/user.service';
-import { UserEntity } from '../../domain/entities/user.entity';
+import { User } from '../../domain/models/user.model';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UpdateUserDto } from '../dtos/update-user.dto';
 
@@ -14,12 +14,12 @@ export class UserController {
     }
 
     @Get(':id')
-    async findUserById(@Param('id') id: string): Promise<UserEntity | undefined> {
+    async findUserById(@Param('id') id: string): Promise<User | undefined> {
         return this.userService.findUserById(id);
     }
 
     @Get()
-    async findAllUsers(): Promise<UserEntity[]> {
+    async findAllUsers(): Promise<User[]> {
         return this.userService.findAllUsers();
     }
 

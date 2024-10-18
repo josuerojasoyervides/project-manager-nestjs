@@ -1,23 +1,25 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CqrsModule } from '@nestjs/cqrs';
-import { UserEntity } from './domain/entities/user.entity';
 
-// Servicios
+// Entities
+import { UserEntity } from './infrastructure/entities/user.entity';
+
+// Services
 import { UserService } from './application/services/user.service';
 
-// Controladores
+// Controllers
 import { UserController } from './application/controllers/user.controller';
 
-// Comandos y Handlers
+// CQRS Commands
 import { CreateUserHandler } from './application/commands/handlers/create-user.handler';
 import { UpdateUserHandler } from './application/commands/handlers/update-user.handler';
 import { DeleteUserHandler } from './application/commands/handlers/delete-user.handler';
 
-// Queries y Handlers
+// CQRS Queries
 import { GetUserHandler } from './application/queries/handlers/get-user.handler';
 
-// Repositorios
+// Repositories
 import { UserRepositoryImpl } from './infrastructure/persistence/user.repository';
 import { IUserRepository } from './domain/repositories/user.repository';
 
@@ -33,9 +35,9 @@ import { IUserRepository } from './domain/repositories/user.repository';
         CreateUserHandler,
         UpdateUserHandler,
         DeleteUserHandler,
-        // Queries Handlers
+        // Query Handlers
         GetUserHandler,
     ],
-    controllers: [UserController],
+    controllers: [UserController],  // Controlador de usuarios
 })
-export class UsersModule { }
+export class UsersModule {}

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, OneToMany } from 'typeorm';
-import { UserEntity } from '../../../users/domain/entities/user.entity';
-import { Task } from 'src/tasks/domain/entities/task.entity';
+import { UserEntity } from '../../../users/infrastructure/entities/user.entity';
+import { Task } from 'src/tasks/infrastructure/entities/task.entity';
 
 @Entity('projects')
 export class Project {
